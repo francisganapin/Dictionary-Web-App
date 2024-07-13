@@ -1,0 +1,199 @@
+{% load static %}
+
+<script src="{% static 'js/ads.js' %}"></script>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary Entries</title>
+</head>
+<body>
+
+    <footer>
+        <p>Author: Francis Ganapin</p>
+        <div id="ad-placeholder">
+            <!-- Ad content will go here -->
+            <img id="ad-placeholder-img" src="" alt="Advertisement">
+        </div>
+    </footer>
+    
+    
+
+    <h1>Dictionary Entries</h1>
+
+    <form method="GET">
+        <input type="text" name="q" placeholder="Search..." value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Display search results -->
+    <h2>Search Results</h2>
+    
+    <ul>
+        {% for entry in page_obj %}
+            <li>
+                <strong>Word:</strong> {{ entry.word }}<br>
+                <strong>Part of Speech:</strong> {{ entry.part_of_speech }}<br>
+                <strong>Description:</strong> {{ entry.description }}<br>
+                <form action="{% url 'delete_dictionary' entry.id %}" method="post">
+                    {% csrf_token %}
+
+
+{% if request.user.is_staff %} <!---show the button if you are staff that was login-->
+
+
+                    <button type="submit" class="delete-btn">Delete</button>
+                    <button><a href="{% url 'edit_dictionary' entry.id %}" class="button">Edit Description</a></button>
+{% endif %}             <!---show the button if you are staff that was login end -->
+
+                </form>
+            </li>
+        {% empty %}
+            <li>No entries found.</li>
+        {% endfor %}
+    </ul>
+    
+    <!-- Pagination links -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1{% if query %}&q={{ query }}{% endif %}">First</a>
+                <a href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}">Previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}">Last</a>
+            {% endif %}
+        </span>
+    </div>
+    
+
+</body>
+</html>
+
+
+<style>
+
+footer {
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text color */
+    padding: 20px 0; /* Padding on top and bottom */
+    text-align: center; /* Center the text */
+}
+
+footer p {
+    margin: 0; /* Remove default margin */
+}
+
+#ad-placeholder {
+    background-color: white; /* White background for ad placeholder */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px; /* Padding inside the ad placeholder */
+    margin-top: 20px; /* Space above the ad placeholder */
+    display: inline-block; /* Allows us to set a width */
+    width: 80%; /* Width of ad placeholder */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+#ad-placeholder img {
+    width: 100%; /* Stretch to fill the width */
+    height: 150px; /* Fixed height */
+    object-fit: cover; /* Cover the area without stretching the image */
+}
+
+
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+    }
+
+    .search-form {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .search-form input[type="text"] {
+        padding: 10px;
+        width: 300px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-right: 10px;
+    }
+
+    .search-form button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .search-form button:hover {
+        background-color: #0056b3;
+    }
+
+    ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    li {
+        background-color: white;
+        padding: 20px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .entry-strong {
+        color: #007bff;
+    }
+
+    .pagination {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .pagination a {
+        padding: 8px 16px;
+        margin-right: 4px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 4px;
+        text-decoration: none; /* Remove underline from links */
+    }
+
+    .pagination a:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    .pagination .current {
+        padding: 8px 16px; /* Same padding as links for consistency */
+    }
+</style>
