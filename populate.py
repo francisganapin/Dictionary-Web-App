@@ -1,15 +1,10 @@
-#i have db.sqlite3 i want to get the data of dictionary.csv 
-# and transfer that to my homepage_dictionary 
-# table each row, row of my table was word.part_of_speech and description
-
-
 import csv
-
-# Initialize a list to hold the data from CSV
 data = []
-
-# Assuming dictionary.csv is in the same directory as this script
 csv_file = 'dictionary.csv'
+
+
+#this python code would transfer the data on csv and populate the table you 
+#choose in db.sqlite of your choice
 
 with open(csv_file, newline='', encoding='utf-8') as csvfile:
     reader = csv.DictReader(csvfile)

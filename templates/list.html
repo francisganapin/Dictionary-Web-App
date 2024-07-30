@@ -26,13 +26,14 @@
     <h1>Dictionary Entries</h1>
 
     <form method="GET">
-        <input type="text" name="q" placeholder="Search..." value="{{ query }}">
-        <button type="submit">Search</button>
+        <input class="search_padding" type="text" name="q" placeholder="Search..." value="{{ query }}">
+        <button class='search_button_padding' type="submit">Search</button>
     </form>
 
     <!-- Display search results -->
-    <h2>Search Results</h2>
-    
+    <h2 class="search_padding">Search Results</h2>
+
+<div class="padding_left_and_right">
     <ul>
         {% for entry in page_obj %}
             <li>
@@ -56,6 +57,7 @@
             <li>No entries found.</li>
         {% endfor %}
     </ul>
+</div>
     
     <!-- Pagination links -->
     <div class="pagination">
@@ -93,6 +95,25 @@ footer {
 footer p {
     margin: 0; /* Remove default margin */
 }
+
+.search_button_padding{
+    margin-left:10px;
+}
+.search_padding{
+
+    margin-left:20px;
+
+}
+
+
+
+.padding_left_and_right{
+    margin-left:20px;
+    margin-right:20px;
+}
+
+
+
 
 #ad-placeholder {
     background-color: white; /* White background for ad placeholder */
