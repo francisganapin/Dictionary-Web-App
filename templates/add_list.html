@@ -81,7 +81,7 @@
         <h2>Add Dictionary Entry</h2>
         <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ form.input }}
             <button type="submit">Save Entry</button>
         </form>
     </div>
