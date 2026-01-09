@@ -10,9 +10,9 @@ def dictionary_list(request):
         results = Dictionary.objects.filter(word__icontains=query)
     else:
         
-        results = Dictionary.objects.none()
+        results = Dictionary.objects.order_by('?')
 
-    paginator = Paginator(results,10)
+    paginator = Paginator(results,9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 

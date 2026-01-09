@@ -1,7 +1,7 @@
 const images = [
-    '',
-    '',
-    '',
+    '/static/icon/image.png',
+    '/static/icon/image.png',
+    '/static/icon/image.png',
 ];
 
 function changeAdImage() {
